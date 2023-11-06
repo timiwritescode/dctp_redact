@@ -9,11 +9,39 @@
 </head>
 <body>
     <div class="main">
-        <h1>Redact now</h1>
-    <textarea name="" id="text" cols="30" rows="10">Input word</textarea>
-    <input type="text" id="redact-word">
-    <button type="submit">Redact now</button>
-    </div>
+        <aside>
+            <div class="hide-btn">
+                <button>X</button>
+            </div>
+            <!---->
+            <div class="words-to-redact">
+                <h3>Add words to redact</h3>
+                <div class="add-button">+</div>
+            </div>
+            <!---->
+            <div class="redact-characters-container">
+                <h3>Select Redact character</h3>
+                <select name="redact-characters" id="redact-characters">
+                    <option value="*">*</option>
+                    <option value="!">!</option>
+                    <option value="-">-</option>
+                </select>
+
+                <button>Choose custom</button>
+            </div>
+                
+            </aside>
+        
+        
+        <div class="work-space ">
+            <h1>Redact now</h1>
+            <textarea name="" id="text" cols="30" rows="10">Input word</textarea>
+            
+            <button type="submit">Redact now</button>
+        </div>
+        
+                
+</div>
     
     
 </body>

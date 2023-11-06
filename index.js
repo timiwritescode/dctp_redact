@@ -1,22 +1,44 @@
 // function to redact a word
 const textArea = document.getElementById('text');
 const submitBtn =  document.querySelector('button');
-const wordToRedact = document.querySelector('#redact-word').value;
+// const wordToRedact = document.querySelector('#redact-word').value;
+const hideToolbarBtn = document.querySelector('.hide-btn')
+const addBtn = document.querySelector('.add-button')
 
 submitBtn.addEventListener('click', () => {
    
     const text = new Text(textArea.value)     
 
-    if (!document.querySelector('#redacted-text')) {
-        const newTextArea = document.createElement('textarea');
-        newTextArea.id = 'redacted-text'
-        document.body.append(newTextArea)
-    }   
-
-    const redactWordTextArea = document.querySelector('#redacted-text')
-    redactWordTextArea.value = text.redactText(['e', 'a', 's'], '*') 
+    textArea.value = text.redactText(['e', 'a', 's'], '*') 
     text.createAnalysis(document.querySelector('.main'))
 });
+
+
+hideToolbarBtn.addEventListener('click', () => {
+    const aside = document.querySelector('aside');
+
+    aside.classList.add("hide-toolbar")
+})
+
+
+addBtn.addEventListener('click', () => {
+    let letterToRedact = prompt("Add a letter to redact");
+    if (letterToRedact.length > 1) {
+        alert('Only select one letter or character')
+
+        return
+    } elif (letter)
+    addWordToRedactToUi(letterToRedact)
+})
+
+// function to make users add word to redact
+function addWordToRedactToUi (word) {
+    const wordsToRedact = document.querySelector('.words-to-redact');
+    const para = document.createElement('p');
+    para.classList.add('word-to-redact')
+    para.textContent = word;
+    wordsToRedact.appendChild(para)
+}
 
 
 class Text {
