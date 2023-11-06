@@ -1,0 +1,12 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+.main {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
