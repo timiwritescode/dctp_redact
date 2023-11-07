@@ -5,6 +5,7 @@ const submitBtn =  document.querySelector('.submit');
 const hideToolbarBtn = document.querySelector('.hide-btn')
 const addBtn = document.querySelector('.add-button')
 const showToolBar = document.querySelector(".bars")
+const clipboardContainer = document.querySelector(".copy-to-clipboard");
 let textToRedact = [];
 
 submitBtn.addEventListener('click', () => {
@@ -16,13 +17,19 @@ submitBtn.addEventListener('click', () => {
         return
     }
     textArea.value = text.redactText(textToRedact, '*') 
-    text.createAnalysis(document.querySelector('.main'))
+    text.createAnalysis(document.querySelector('.work-space'))
+    // replace submitBtn with try again button
+    document.querySelector(".tooltip").style.display = 'inherit'
+    replaceSubmitBtn()
 });
 
 
 hideToolbarBtn.addEventListener('click', () => {
     const aside = document.querySelector('aside');
     const asideChildren = [...aside.children] 
+    const pageCover = document.querySelector('.page-cover');
+
+    pageCover.style.display = 'none'
     
     aside.classList.add("hide-toolbar")
     asideChildren.forEach(child => child.style.display = 'none')  
@@ -31,7 +38,11 @@ hideToolbarBtn.addEventListener('click', () => {
 showToolBar.addEventListener('click', () => {
     const aside = document.querySelector('aside');
     const asideChildren = [...aside.children];
-    console.log("yIpppppeee")
+    
+    const pageCover = document.querySelector('.page-cover');
+    pageCover.style.display = 'inherit'
+    
+    
     if (aside.classList.contains("hide-toolbar")) {
         aside.classList.remove("hide-toolbar")
         asideChildren.forEach(child => child.style.display = '')
@@ -55,6 +66,34 @@ addBtn.addEventListener('click', () => {
     }
     
 })
+
+clipboardContainer.addEventListener("click", () => {
+    copyToClipboard()
+})
+
+// function to copy text to clip board
+function copyToClipboard () {
+    const copyText = document.getElementById("text");
+    const clipboardIcon = document.querySelector('.fa-clipboard')
+    copyText.select();
+    copyText.setSelectionRange(0, 999999);
+
+    navigator.clipboard.writeText(copyText.value);
+
+    clipboardIcon.style.color = "green"
+    document.querySelector('.tooltiptext').textContent = 'copied'
+}
+
+// function to replace submit with try again button
+function replaceSubmitBtn() {
+    const tryAgainBtn = document.createElement('button');
+    tryAgainBtn.textContent = 'Try again'
+    tryAgainBtn.addEventListener('click', () => {
+        location.reload()
+    })
+    const submitBtn = document.querySelector('.submit')
+    submitBtn.parentElement.replaceChild(tryAgainBtn, submitBtn)
+}
 
 // function to make users add word to redact
 function addWordToRedactToUi (word) {
@@ -87,7 +126,6 @@ function addWordToRedactToUi (word) {
 }
 
 
-
 function deleteLetterFromRedactUi(letter) {
     const container = document.getElementById(letter);
     try {
@@ -117,19 +155,18 @@ class Text {
     }
 
     createAnalysis(parentElement) {
-        const analysisElement = document.createElement('div');
-        analysisElement.classList.add('analysis');
-        const analysisPara = document.createElement('p');
-        analysisPara.textContent = `${this._numberOfWords} words scanned, ${this._numberOfCharacters} characters scanned`
-        analysisElement.appendChild(analysisPara);
-
-        // append to parent
-        parentElement.appendChild(analysisElement)
+        const wordsScanned = document.getElementById('analysis-a');
+        const charactersScanned = document.getElementById('analysis-b');
+        const charactersRedacted = document.getElementById('analysis-c');
+        const wordsRedacted = document.getElementById('analysis-d');
+    
+        wordsScanned.textContent += this._numberOfWords;
+        charactersScanned.textContent += this._numberOfCharacters;
     }    
 
     redactText(filter, redacter='*') {
         let redactedText = ''
-        console.log(this.text)
+        
         for (let i = 0; i < this.text.length; i++) {
             if(filter.includes(this.text[i])) {
                 redactedText+= redacter
