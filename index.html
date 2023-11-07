@@ -5,14 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script defer src="./index.js"></script>
 </head>
 <body>
     <div class="main">
+        <div class="bars">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+            
+        </div>
         <aside>
             <div class="hide-btn">
-                <button>X</button>
+                <i class="fa fa-close" aria-hidden="true"></i>
+                
             </div>
+
+            
             <!---->
             <div class="words-to-redact">
                 <h3>Add words to redact</h3>
@@ -32,12 +40,11 @@
                 
             </aside>
         
-        
         <div class="work-space ">
             <h1>Redact now</h1>
             <textarea name="" id="text" cols="30" rows="10">Input word</textarea>
             
-            <button type="submit">Redact now</button>
+            <button type="submit" class="submit">Redact now</button>
         </div>
         
                 
