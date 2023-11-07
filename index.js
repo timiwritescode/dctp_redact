@@ -140,6 +140,8 @@ class Text {
         this.text = text
         this._numberOfWords = this.text.split(' ').length
         this._numberOfCharacters = this.text.length
+        this._numberOfCharactersRedacted = 0;
+        this._numberOfRedactedWords = 0;
     }
     
     getNumberOfCharactersInText () {
@@ -162,18 +164,39 @@ class Text {
     
         wordsScanned.textContent += this._numberOfWords;
         charactersScanned.textContent += this._numberOfCharacters;
+        charactersRedacted.textContent += this._numberOfCharactersRedacted
+        wordsRedacted.textContent += this._numberOfRedactedWords
     }    
 
     redactText(filter, redacter='*') {
-        let redactedText = ''
-        
-        for (let i = 0; i < this.text.length; i++) {
-            if(filter.includes(this.text[i])) {
-                redactedText+= redacter
-            } else {
-                redactedText += this.text[i]
+        let arrayOfPureText = this.text.split(' ');
+        let arrayOfRedactedText = [];
+
+        for (let i = 0; i < arrayOfPureText.length; i++) {
+            let initialText = arrayOfPureText[i]
+            filter.forEach(character => {
+                if (arrayOfPureText[i].includes(character)) {
+                    let regex = new RegExp(character, 'g');
+                    const matches = arrayOfPureText[i].match(regex);
+                    
+                    // increment the redacted character
+                    this._numberOfCharactersRedacted = matches.length
+                    
+                    // record the number 
+                    arrayOfPureText[i] = arrayOfPureText[i].replaceAll(character, redacter)
+                }
+                
+            })
+            // array has already been modified basedon condition 
+            // check if the intial value of arr[i] is still the same
+            let finalText = arrayOfPureText[i]
+
+            if (!(finalText === initialText)) {
+                arrayOfRedactedText.push(finalText)
             }
+            
         }
-        return redactedText        
+        this._numberOfRedactedWords += arrayOfRedactedText.length
+        return arrayOfPureText.join(" ")
     }    
 }
