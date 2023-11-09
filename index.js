@@ -15,7 +15,8 @@ submitBtn.addEventListener('click', () => {
     if (textToRedact.length === 0) {
         alert("Please select a letter to redact")
         return
-    }
+    } 
+
     textArea.value = text.redactText(textToRedact, '*') 
     text.createAnalysis(document.querySelector('.work-space'))
     // replace submitBtn with try again button
@@ -51,11 +52,14 @@ showToolBar.addEventListener('click', () => {
 
 
 addBtn.addEventListener('click', () => {
-    let letterToRedact = prompt("Add a letter to redact");
+    let letterToRedact = prompt("Add a letter to redact").trim();
     
     if (letterToRedact.length > 1) {
         alert('Only select one letter or character')
 
+        return
+    } else if (letterToRedact < 1) {
+        alert("please choose a letter and don't include whitespace")
         return
     }
     if (!document.getElementById(letterToRedact)) {
